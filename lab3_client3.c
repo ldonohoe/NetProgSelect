@@ -29,18 +29,30 @@ main(int argc, char **argv)
 
 	Connect(sockfd, (SA *) &servaddr, sizeof(servaddr));
 
-	char sendline[MAXLINE], recvline[MAXLINE];
+	char recvline[MAXLINE];
 
-	while (1) {
+	int shouldClose;
 
+	for (; ;) {
 
-		if (Readline(sockfd, recvline, MAXLINE) == 0) {
+		//Readline(sockfd, recvline, MAXLINE);
+		shouldClose = recv(sockfd, recvline, MAXLINE, 0);
+
+		//Fputs(recvline, stdout);
+		//printf("Hi there\n");
+		printf("%s\n", recvline);
+		fflush(stdout);
+
+		if (shouldClose == 0){
 			err_quit("str_cli: server terminated prematurely");
 		}
 
-		//Fputs(recvline, stdout);
-		printf("%s\n", recvline);
-		fflush(stdout);
+		//if (Readline(sockfd, recvline, MAXLINE) == 0) {
+		//	err_quit("str_cli: server terminated prematurely");
+		//}
+
+		
+		
 		
 		
 	}
